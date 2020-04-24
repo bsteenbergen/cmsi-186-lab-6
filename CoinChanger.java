@@ -33,7 +33,16 @@ public abstract class CoinChanger {
             }
     
             var result = 0;
-            //recursive equation here
+            for (var d : denominations) {
+                if (amount < d) {
+                    return 0;
+                } else if (amount == d) {
+                    return 1;
+                } else  {
+                    //compare minCoins(amount - d) with min so far ...
+                    //result =
+                }
+            }
     
             memo.put(memoKey, result);
             return result;
