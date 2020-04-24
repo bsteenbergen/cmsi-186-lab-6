@@ -32,15 +32,17 @@ public abstract class CoinChanger {
                 return memo.get(memoKey);
             }
     
-            var result = 0;
+            var result = Integer.MAX_VALUE;
             for (var d : denominations) {
                 if (amount < d) {
-                    return 0;
+                    continue;
                 } else if (amount == d) {
-                    return 1;
+                    result = 1;
                 } else  {
-                    //compare minCoins(amount - d) with min so far ...
-                    //result =
+                    var updatedResult = minCoins(amount - d, denominations);
+                    if (updatedResult < result) {
+                        result = 1 + updatedResult;
+                    }
                 }
             }
     
@@ -52,10 +54,24 @@ public abstract class CoinChanger {
     public static class BottomUp extends CoinChanger {
         public int minCoins(int amount, Set<Integer> denominations) {
             checkArguments(amount, denominations);
-
-            // TODO: Implement this method using the bottom-up approach with
-            // a table.
-            return 0; // TODO change this line, of course
+            
+            var table = new int[amount + 1];
+            table[0] = 0;
+            for (var i = 0; i <= amount; i++) {
+                var newResult = Integer.MAX_VALUE;
+                for (var d : denominations) {
+                    if (i < d) {
+                        continue;
+                    } if (table[i - d] >= 0 && table[i - d] + 1 < newResult) {
+                        newResult = table[i - d] + 1;
+                    } if (newResult == Integer.MAX_VALUE) {
+                        table[i] = -1;
+                    } else {
+                        table[i] = newResult;
+                    }
+                }
+            }
+            return table[amount];
         }
     }
 }
