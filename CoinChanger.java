@@ -1,6 +1,5 @@
 import java.util.Set;
 import java.util.HashMap;
-import java.util.Date;
 
 public abstract class CoinChanger {
     abstract public int minCoins(int amount, Set<Integer> denominations);
@@ -29,7 +28,7 @@ public abstract class CoinChanger {
             checkArguments(amount, denominations);
 
             var memoKey = amount + "" + denominations;
-            
+
             long startTime = System.currentTimeMillis();
 
             if (memo.containsKey(memoKey)) {
@@ -49,10 +48,10 @@ public abstract class CoinChanger {
                     }
                 }
             }
-            long endtime = System.currentTimeMillis();
+            long endTime = System.currentTimeMillis();
             memo.put(memoKey, result);
 
-            System.out.println(startTime - endtime);
+            System.out.println(endTime - startTime);
 
             return result;
         }
@@ -81,8 +80,8 @@ public abstract class CoinChanger {
                     }
                 }
             }
-            long endtime = System.currentTimeMillis();
-            System.out.println(startTime - endtime);
+            long endTime = System.currentTimeMillis();
+            System.out.println(endTime - startTime);
 
             return table[amount];
         }
